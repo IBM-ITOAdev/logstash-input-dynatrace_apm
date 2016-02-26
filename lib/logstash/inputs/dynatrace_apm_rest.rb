@@ -76,7 +76,7 @@ class LogStash::Inputs::APM_REST < LogStash::Inputs::Base
   # convert the time (with its format) to epoch
   # e.g: 
   #    convert_to_epoch('2016/02/09 15:05:10 +1100', "%Y/%m/%d %H:%M:%S %z")
-  public
+  private
   def convert_to_epoch (t, f)
     DateTime.strptime(t,f).to_time.to_i
   end
@@ -93,7 +93,7 @@ class LogStash::Inputs::APM_REST < LogStash::Inputs::Base
     end
   end
 
-  public 
+  private
   def https_get(timeBegin, timeEnd)
     u = "https://#@hostname:#@port/rest/management/reports/create/#@dashboard?type=XML\&filter=tf:CustomTimeframe?#{timeBegin}000:#{timeEnd}000"
     puts u
@@ -115,7 +115,7 @@ class LogStash::Inputs::APM_REST < LogStash::Inputs::Base
     queue << event
   end
 
-  public
+  private
   def call_api(queue, timeBegin, timeEnd)
     @q = queue
     r = https_get(timeBegin, timeEnd)
