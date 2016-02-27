@@ -46,7 +46,7 @@ https://community.dynatrace.com/community/pages/viewpage.action?pageId=196642651
 ## How it works
 
 ### The APM Dashboard
-You will have to define a dashboard on the Dynatrace APM side.  The dashboard defines the data sources that are going to be polled and also the granularity of the metrics.
+You will have to define a dashboard on the Dynatrace APM side using the Java Web Start fat client (the dashboards on the web pages will not work).  The dashboard defines the data sources that are going to be polled and also the granularity of the metrics.
 
 ### Batch and Live Modes
 The plugin starts with batch mode by polling the API continuously starting from rangeStart with step width defined by step_batch.  If the rangeEnd is 'now' the plugin will switch to live mode once it reaches the current time.  The live mode will poll the API with intervals defined by step_live.  In live mode, the plugin will sleep for the seconds defined by step_live before the next poll.
