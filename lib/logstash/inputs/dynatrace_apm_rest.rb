@@ -16,7 +16,6 @@ require "rexml/streamlistener"
 
 include REXML
 
-public
 def remove_comma(s)
   s.sub! ',', ''
   return s.to_s
