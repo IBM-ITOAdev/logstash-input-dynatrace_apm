@@ -64,7 +64,7 @@ class LogStash::Inputs::APM_REST < LogStash::Inputs::Base
 
   config :hostname, :validate => :string, :required => true
   config :dashboard, :validate => :string, :required => true
-  config :port, :validate => :number, :default => 80
+  config :port, :validate => :number, :default => 8021
   config :username, :validate => :string, :required => true
   config :password, :validate => :string, :required => true
   config :step_batch, :validate => :number, :default => 300
