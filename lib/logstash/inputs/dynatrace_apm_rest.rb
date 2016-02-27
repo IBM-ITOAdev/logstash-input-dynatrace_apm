@@ -16,17 +16,17 @@ require "rexml/streamlistener"
 
 include REXML
 
-def remove_comma(s)
-  s.sub! ',', ''
-  return s.to_s
-end
-
 class PostCallbacks
   include StreamListener
-  
+
   def initialize(queue, o)
     @queue = queue
     @o = o
+  end
+
+  def remove_comma(s)
+    s.sub! ',', ''
+    return s.to_s
   end
 
   def tag_start(element, attributes)
