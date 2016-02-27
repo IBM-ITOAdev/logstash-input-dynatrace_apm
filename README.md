@@ -51,3 +51,5 @@ The plugin starts with batch mode by polling the API continuously starting from 
 
 If the rangeEnd is not 'now' the plugin will exit once it reaches the rangeEnd.
 
+### Work with IBM Operations Analytics - Predictive Insights and scacsv output
+If more than one charts are included in the APM dashboard you will have to sort the scacsv output csv files before feeding into PI because each chart in the dashboard will have its own section in the query result (XML) and scacsv will not take care of the sorting of the result.
