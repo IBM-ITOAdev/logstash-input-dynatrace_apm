@@ -4,9 +4,11 @@
 
 Test has been done on Logstash 2.2.0.  
 
+(check the non-IBM JRE version -- TBD)
+
 # dynatrace_apm_rest.rb
 
-This plugin queries Dynatrace APM REST interface for its monitoring metrics (in XML).  Here are the links to the online documentation:
+This plugin queries Dynatrace APM REST interface for its monitoring metrics (in XML).  Here is the link to the online documentation:
 https://community.dynatrace.com/community/pages/viewpage.action?pageId=196642651#DashboardsandReporting%28REST%29-GenerateaDashboardReport
 
 ## Input
@@ -52,4 +54,4 @@ The plugin starts with batch mode by polling the API continuously starting from 
 If the rangeEnd is not 'now' the plugin will exit once it reaches the rangeEnd.
 
 ### Work with IBM Operations Analytics - Predictive Insights and scacsv output
-If more than one charts are included in the APM dashboard you will have to sort the scacsv output csv files before feeding into PI because each chart in the dashboard will have its own section in the query result (XML) and scacsv will not take care of the sorting of the result.
+If more than one charts are included in the APM dashboard you will have to sort the scacsv output csv files before feeding into PI because each chart in the dashboard will have its own section in the query result (XML) and scacsv will not take care of the order of the result.
