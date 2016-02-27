@@ -12,7 +12,7 @@ https://community.dynatrace.com/community/pages/viewpage.action?pageId=196642651
 ## Input
 
 | Parameter   | Description                                                                                                                                                             | Optional? |
-|-------------+-------------------------------------------------------------------------------------------------------------------------------------------------------------------------+-----------|
+|-------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------|
 | hostname    | name or IP address of the Dynatrace server we are going to connect                                                                                                      | No        |
 | port        | HTTP port number, default is 8021                                                                                                                                       | Yes       |
 | username    | the username used for REST API call                                                                                                                                     | No        |
