@@ -3,6 +3,8 @@
 #
 # Retrieve metrics from Dynatrace APM REST API
 #
+#                      Larry Song (larryls@au1.ibm.com)
+#
 ########################################################
 require "logstash/inputs/base"
 require "logstash/namespace"
