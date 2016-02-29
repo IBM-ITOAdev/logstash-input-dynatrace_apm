@@ -1,7 +1,9 @@
 # encoding: utf-8                                                               
 ########################################################
 #
+#  Retrieve metrics from Dynatrace APM REST API
 # 
+#                     Larry Song (larryls@au1.ibm.com)
 #
 ########################################################
 require "logstash/inputs/base"
