@@ -29,7 +29,7 @@ https://community.dynatrace.com/community/pages/viewpage.action?pageId=196642651
 ### Sample input config
 
 ``` ruby
-  apm_rest_batch_dev {
+  dynatrace_apm_rest {
     hostname => 'abc.xyz'
     dashboard => 'myDashboard'
     port => 8021
