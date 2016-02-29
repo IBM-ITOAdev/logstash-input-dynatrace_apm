@@ -55,3 +55,8 @@ If the rangeEnd is not 'now' the plugin will exit once it reaches the rangeEnd.
 
 ### Work with IBM Operations Analytics - Predictive Insights and scacsv output
 If more than one charts are included in the APM dashboard you will have to sort the scacsv output csv files before feeding into PI because each chart in the dashboard will have its own section in the query result (XML) and scacsv will not take care of the order of the result.
+Here is a sample sort command:
+``` shell
+for file in *csv; do grep resourceid $file > data/$file; grep -v resourceid $file|sort -t , -k 2 >> data/$file; done
+```
+The line contains resourceid is the header.
