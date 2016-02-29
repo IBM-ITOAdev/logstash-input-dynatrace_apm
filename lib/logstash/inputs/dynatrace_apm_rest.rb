@@ -1,14 +1,11 @@
 # encoding: utf-8                                                               
 ########################################################
 #
-# Retrieve metrics from Dynatrace APM REST API
-#
-#                      Larry Song (larryls@au1.ibm.com)
+# 
 #
 ########################################################
 require "logstash/inputs/base"
 require "logstash/namespace"
-require "pathname"
 require "stud/interval"
 require "net/https"
 require "uri"
@@ -20,15 +17,15 @@ include REXML
 
 class PostCallbacks
   include StreamListener
-
-  def initialize(queue, o)
-    @queue = queue
-    @o = o
-  end
-
+  
   def remove_comma(s)
     s.sub! ',', ''
     return s.to_s
+  end
+  
+  def initialize(queue, o)
+    @queue = queue
+    @o = o
   end
 
   def tag_start(element, attributes)
@@ -57,15 +54,15 @@ class PostCallbacks
   end
 end
 
-class LogStash::Inputs::APM_REST < LogStash::Inputs::Base
-  config_name "apm_rest"
+class LogStash::Inputs::DYNATRACE_APM_REST < LogStash::Inputs::Base
+  config_name "dynatrace_apm_rest"
   milestone 1
 
   default :codec, "plain"
 
   config :hostname, :validate => :string, :required => true
   config :dashboard, :validate => :string, :required => true
-  config :port, :validate => :number, :default => 8021
+  config :port, :validate => :number, :default => 80
   config :username, :validate => :string, :required => true
   config :password, :validate => :string, :required => true
   config :step_batch, :validate => :number, :default => 300
@@ -77,7 +74,7 @@ class LogStash::Inputs::APM_REST < LogStash::Inputs::Base
   # convert the time (with its format) to epoch
   # e.g: 
   #    convert_to_epoch('2016/02/09 15:05:10 +1100', "%Y/%m/%d %H:%M:%S %z")
-  private
+  public
   def convert_to_epoch (t, f)
     DateTime.strptime(t,f).to_time.to_i
   end
@@ -94,7 +91,7 @@ class LogStash::Inputs::APM_REST < LogStash::Inputs::Base
     end
   end
 
-  private
+  private 
   def https_get(timeBegin, timeEnd)
     u = "https://#@hostname:#@port/rest/management/reports/create/#@dashboard?type=XML\&filter=tf:CustomTimeframe?#{timeBegin}000:#{timeEnd}000"
     puts u
@@ -118,7 +115,6 @@ class LogStash::Inputs::APM_REST < LogStash::Inputs::Base
 
   private
   def call_api(queue, timeBegin, timeEnd)
-    @q = queue
     r = https_get(timeBegin, timeEnd)
     Document.parse_stream(r, PostCallbacks.new(queue, self))
   end
@@ -157,4 +153,4 @@ class LogStash::Inputs::APM_REST < LogStash::Inputs::Base
   def teardown
   end
   
-end # class LogStash::Inputs::APM_REST
+end # class LogStash::Inputs::DYNATRACE_APM_REST
