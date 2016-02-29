@@ -76,7 +76,7 @@ class LogStash::Inputs::DYNATRACE_APM_REST < LogStash::Inputs::Base
   # convert the time (with its format) to epoch
   # e.g: 
   #    convert_to_epoch('2016/02/09 15:05:10 +1100', "%Y/%m/%d %H:%M:%S %z")
-  public
+  private
   def convert_to_epoch (t, f)
     DateTime.strptime(t,f).to_time.to_i
   end
