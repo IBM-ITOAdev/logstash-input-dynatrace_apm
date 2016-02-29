@@ -4,9 +4,11 @@
 
 Test has been done on Logstash 2.2.0.  
 
+(check the non-IBM JRE version -- TBD)
+
 # dynatrace_apm_rest.rb
 
-This plugin queries Dynatrace APM REST interface for its monitoring metrics (in XML).  Here are the links to the online documentation:
+This plugin queries Dynatrace APM REST interface for its monitoring metrics (in XML).  Here is the link to the online documentation:
 https://community.dynatrace.com/community/pages/viewpage.action?pageId=196642651#DashboardsandReporting%28REST%29-GenerateaDashboardReport
 
 ## Input
@@ -44,10 +46,12 @@ https://community.dynatrace.com/community/pages/viewpage.action?pageId=196642651
 ## How it works
 
 ### The APM Dashboard
-You will have to define a dashboard on the Dynatrace APM side.  The dashboard defines the data sources that are going to be polled and also the granularity of the metrics.
+You will have to define a dashboard on the Dynatrace APM side using the Java Web Start fat client (the dashboards on the web pages will not work).  The dashboard defines the data sources that are going to be polled and also the granularity of the metrics.
 
 ### Batch and Live Modes
 The plugin starts with batch mode by polling the API continuously starting from rangeStart with step width defined by step_batch.  If the rangeEnd is 'now' the plugin will switch to live mode once it reaches the current time.  The live mode will poll the API with intervals defined by step_live.  In live mode, the plugin will sleep for the seconds defined by step_live before the next poll.
 
 If the rangeEnd is not 'now' the plugin will exit once it reaches the rangeEnd.
 
+### Work with IBM Operations Analytics - Predictive Insights and scacsv output
+If more than one charts are included in the APM dashboard you will have to sort the scacsv output csv files before feeding into PI because each chart in the dashboard will have its own section in the query result (XML) and scacsv will not take care of the order of the result.
