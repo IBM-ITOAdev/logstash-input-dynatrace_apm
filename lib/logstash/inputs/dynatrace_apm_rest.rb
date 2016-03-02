@@ -25,9 +25,11 @@ class PostCallbacks
     return s.to_s
   end
   
-  def initialize(queue, o)
+  def initialize(queue, o, timeBegin, timeEnd)
     @queue = queue
     @o = o
+    @timeBegin = timeBegin.to_i
+    @timeEnd = timeEnd.to_i
   end
 
   def tag_start(element, attributes)
@@ -46,7 +48,17 @@ class PostCallbacks
       attributes.each do |k, v|
         if k == 'timestamp'
           # to get rid of the last three zeros
-          v = (v.to_i/1000).to_s
+          v = v.to_i/1000
+          if v > @timeEnd || v < @timeBegin
+            # if timestamp is not in the query range then discard
+            v_t = Time.at(v)
+            b_t = Time.at(@timeBegin)
+            e_t = Time.at(@timeEnd)
+            puts "Discard: #{v} (#{v_t}) from #{b_t} to #{e_t} >> dashboardreport:#@dashboardreport, chartdashlet:#@chartdashlet, measure:#@measure"
+            return
+          else
+            v = v.to_s
+          end
         end
         event["#{k}"] = v
       end
@@ -118,7 +130,7 @@ class LogStash::Inputs::DYNATRACE_APM_REST < LogStash::Inputs::Base
   private
   def call_api(queue, timeBegin, timeEnd)
     r = https_get(timeBegin, timeEnd)
-    Document.parse_stream(r, PostCallbacks.new(queue, self))
+    Document.parse_stream(r, PostCallbacks.new(queue, self, timeBegin, timeEnd))
   end
 
   public
@@ -128,8 +140,11 @@ class LogStash::Inputs::DYNATRACE_APM_REST < LogStash::Inputs::Base
       if current <= @epoch_end 
         now = Time.now.to_i
         current_step = current + @step_batch
+        c_t = Time.at(current)
+        n_t = Time.at(now)
+        cs_t = Time.at(current_step)
         if current_step > now
-          puts "working on #{current} to now: #{now}. This is the last batch call"
+          puts "working on #{current} (#{c_t}) to now: #{now} (#{n_t}). This is the last batch call."
           # this is last batch call (to present)
           call_api(queue, current, now)
           current = now
@@ -141,7 +156,7 @@ class LogStash::Inputs::DYNATRACE_APM_REST < LogStash::Inputs::Base
             current = now
           end
         else 
-          puts "working on #{current} to #{current_step}"
+          puts "working on #{current} (#{c_t}) to #{current_step} (#{cs_t})."
           call_api(queue, current, current_step)
           current = current_step
         end
