@@ -58,8 +58,8 @@ If more than one charts are included in the APM dashboard you will have to sort 
 Here is a sample sort command:
 ``` shell
 for file in *csv; do 
-  grep resourceid $file > data/$file
-  grep -v resourceid $file | sort -t , -k 2 >> sorted/$file
+  grep timestamp $file > data/$file
+  grep -v timestamp $file | sort -t , -k 2 >> sorted/$file
 done
 ```
-The line contains *resourceid* is the header.
+The line contains *timestamp* is the header.
