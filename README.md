@@ -11,6 +11,8 @@ Test has been done on Logstash 2.2.0.
 This plugin queries Dynatrace APM REST interface for its monitoring metrics (in XML).  Here is the link to the online documentation:
 https://community.dynatrace.com/community/pages/viewpage.action?pageId=196642651#DashboardsandReporting%28REST%29-GenerateaDashboardReport
 
+## Dashboard Creation
+I have created [this document](https://github.com/IBM-ITOAdev/logstash-input-dynatrace_apm/blob/master/Dynatrace.Dashboard.Creation.pdf) to help you work on the dashboards that will be used by the API.
 ## Input
 
 | Parameter   | Description                                                                                                                                                             | Optional? |
