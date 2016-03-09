@@ -137,9 +137,12 @@ class LogStash::Inputs::DYNATRACE_APM_REST < LogStash::Inputs::Base
   def run(queue)
     current = @epoch_begin
     loop do
-      if current <= @epoch_end 
+      if current < @epoch_end 
         now = Time.now.to_i
         current_step = current + @step_batch
+        if current_step >= @epoch_end
+          current_step = @epoch_end
+        end
         c_t = Time.at(current)
         n_t = Time.at(now)
         cs_t = Time.at(current_step)
@@ -154,6 +157,9 @@ class LogStash::Inputs::DYNATRACE_APM_REST < LogStash::Inputs::Base
             now = Time.now.to_i
             call_api(queue, current, now)
             current = now
+            if current >= @epoch_end
+              return
+            end
           end
         else 
           puts "working on #{current} (#{c_t}) to #{current_step} (#{cs_t})."
@@ -161,7 +167,8 @@ class LogStash::Inputs::DYNATRACE_APM_REST < LogStash::Inputs::Base
           current = current_step
         end
       else
-        break
+        # current >= @epoch_end 
+        return
       end
     end
   end
