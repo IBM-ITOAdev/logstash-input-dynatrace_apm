@@ -2,9 +2,9 @@
 
 # Dependencies
 
-Test has been done on Logstash 2.2.0.  
+Test has been done on Logstash 2.2.0 using Sun JRE version 1.8. 
 
-(check the non-IBM JRE version -- TBD)
+(Try to avoid IBM JRE 1.7.0 as it caused issues on https)
 
 # dynatrace_apm_rest.rb
 
