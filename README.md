@@ -72,15 +72,15 @@ For some reasons I don't know yet the Dynatrace APM API can come back with less 
 
 A [script](https://github.com/IBM-ITOAdev/logstash-input-dynatrace_apm/blob/master/utils/metric_check.pl) has been created to check the scacsv generated files and find out those unusual cases.
 
-*Synopsys*:
+**Synopsys**:
 
 metric_check [file name] [resource index] [expected number of occurrences]
 
-  **[file name]**: name of the csv file
+    *[file name]*: name of the csv file
 
-  **[resource index]**: one or more index (start from zero) that can construct an unique resource id.  Indexes are separated by colon, e.g. "1:3:4"
+    *[resource index]*: one or more index (start from zero) that can construct an unique resource id.  Indexes are separated by colon, e.g. "1:3:4"
 
-  **[expected number of occurrences]**: the number of occurrences of unique resource id should occur in the file.  For example, if the metrics are at five minutes interval and the file holds one hour of metrics then the value should be 12.  The script will not report on correct value.
+    *[expected number of occurrences]*: the number of occurrences of unique resource id should occur in the file.  For example, if the metrics are at five minutes interval and the file holds one hour of metrics then the value should be 12.  The script will not report on correct value.
 
 Example:
 ```
